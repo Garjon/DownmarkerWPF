@@ -1,6 +1,8 @@
 using System.Threading;
 using System.Windows.Automation;
+using TestStack.White.InputDevices;
 using TestStack.White.UIItems;
+using TestStack.White.UIItems.Finders;
 using TestStack.White.Utility;
 using TestStack.White.WindowsAPI;
 
@@ -48,6 +50,41 @@ namespace MarkPad.UITests.Infrastructure
             ParentScreen.WhiteWindow.Keyboard.HoldKey(KeyboardInput.SpecialKeys.CONTROL);
             ParentScreen.WhiteWindow.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.END);
             ParentScreen.WhiteWindow.Keyboard.LeaveKey(KeyboardInput.SpecialKeys.CONTROL);
+        }
+
+        public void SelectAllText()
+        {
+            if (!EditorUIItem.IsFocussed)
+                EditorUIItem.Focus();
+
+            ParentScreen.WhiteWindow.Keyboard.HoldKey(KeyboardInput.SpecialKeys.CONTROL);
+            ParentScreen.WhiteWindow.Keyboard.Enter("A");
+            ParentScreen.WhiteWindow.Keyboard.LeaveKey(KeyboardInput.SpecialKeys.CONTROL);
+        }
+
+        public void UnselectText(int numberOfCharacters)
+        {
+            if (!EditorUIItem.IsFocussed)
+                EditorUIItem.Focus();
+
+            Keyboard.Instance.HoldKey(KeyboardInput.SpecialKeys.SHIFT);
+
+            for (int i = 0; i < numberOfCharacters; i++)
+            {
+                ParentScreen.WhiteWindow.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.LEFT);
+            }
+
+            Keyboard.Instance.LeaveKey(KeyboardInput.SpecialKeys.SHIFT);
+        }
+
+        public void PressButton(string buttonName)
+        {
+            ParentScreen.WhiteWindow.Get<Button>(buttonName).Click();
+        }
+
+        public bool IsControlVisible(string controlName)
+        {
+            return ParentScreen.WhiteWindow.Get(SearchCriteria.ByAutomationId(controlName)).Visible;
         }
     }
 }

@@ -140,6 +140,33 @@ namespace MarkPad.UITests
 
                 Assert.Equal("\"http://www.google.com\"", editor.MarkdownText);
             }
+
+            [Fact]
+            public void ShowCodeBlockContextButtonWhenAnEntireLineIsSelected()
+            {
+                var document = MainWindow.NewDocument();
+                var editor = document.Editor();
+                editor.MarkdownText = "var markPadIsAmazing = true;";
+
+                editor.SelectAllText();
+
+                Assert.Equal(false, editor.IsControlVisible("codeButton"));
+                Assert.Equal(true, editor.IsControlVisible("codeBlockButton"));
+            }
+
+            [Fact]
+            public void ShowCodeContextButtonWhenOnlyPartOfALineIsSelected()
+            {
+                var document = MainWindow.NewDocument();
+                var editor = document.Editor();
+                editor.MarkdownText = "var markPadIsAmazing = true;";
+
+                editor.SelectAllText();
+                editor.UnselectText(1);
+
+                Assert.Equal(true, editor.IsControlVisible("codeButton"));
+                Assert.Equal(false, editor.IsControlVisible("codeBlockButton"));
+            }
         }
     }
 }

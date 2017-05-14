@@ -119,12 +119,14 @@
                         Content="I"
                         ToolTip="Italic" />
                     <Button
+                        x:Name="codeButton"
                         Width="44"
                         Margin="5,0,0,0"
                         Command="Commands:FormattingCommands.ToggleCode"
                         Content="Code"
                         ToolTip="Code" />
                     <Button
+                        x:Name="codeBlockButton"
                         Width="78"
                         Command="Commands:FormattingCommands.ToggleCodeBlock"
                         Content="Code block"
